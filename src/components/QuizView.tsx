@@ -11,7 +11,6 @@ import {
 } from "../store/atoms";
 import type { FeedbackType, QuizStep } from "../types";
 import { levenshteinDistance, normalizeString } from "../utils/levenshtein";
-
 import { Kbd } from "./Kbd";
 
 export const QuizView: React.FC = () => {
@@ -192,27 +191,21 @@ export const QuizView: React.FC = () => {
                         <button
                             type="button"
                             onClick={handleSkip}
-                            className="flex-1 py-4 text-gray-500 bg-gray-100 rounded-2xl font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-1.5"
+                            className="flex-1 py-4 text-gray-600 bg-gray-100 rounded-2xl font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
                         >
                             <span>スキップ</span>
-                            <span className="text-xs font-normal opacity-75">
-                                (<Kbd>Space</Kbd>)
-                            </span>
+                            <Kbd>Space</Kbd>
                         </button>
                         <button
                             type="button"
                             onClick={handleAnswerSubmit}
                             disabled={!inputValue.trim()}
-                            className="flex-1 py-4 text-white bg-blue-600 rounded-2xl font-bold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-1.5"
+                            className="flex-1 py-4 text-white bg-blue-600 rounded-2xl font-bold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 shadow-md"
                         >
                             <span>判定する</span>
-                            <span className="text-xs font-normal opacity-90">
-                                (
-                                <Kbd className="bg-blue-700 text-white border-blue-500 shadow-[0_1.5px_0_0_rgba(0,0,0,0.3)]">
-                                    Enter
-                                </Kbd>
-                                )
-                            </span>
+                            <Kbd className="bg-blue-500/80 text-white border-blue-400/50 shadow-none">
+                                Enter
+                            </Kbd>
                         </button>
                     </div>
                 </div>
@@ -283,9 +276,13 @@ export const QuizView: React.FC = () => {
                                     <span className="font-bold mb-1">
                                         わかっていた
                                     </span>
-                                    <span className="text-xs font-normal opacity-80 flex items-center gap-1">
-                                        キー: <Kbd>O</Kbd> / <Kbd>Y</Kbd>
-                                    </span>
+                                    <div className="flex items-center gap-1">
+                                        <Kbd>O</Kbd>
+                                        <span className="text-xs text-gray-400">
+                                            /
+                                        </span>
+                                        <Kbd>Y</Kbd>
+                                    </div>
                                 </button>
                                 <button
                                     type="button"
@@ -296,9 +293,13 @@ export const QuizView: React.FC = () => {
                                     <span className="font-bold mb-1">
                                         わからなかった
                                     </span>
-                                    <span className="text-xs font-normal opacity-80 flex items-center gap-1">
-                                        キー: <Kbd>X</Kbd> / <Kbd>N</Kbd>
-                                    </span>
+                                    <div className="flex items-center gap-1">
+                                        <Kbd>X</Kbd>
+                                        <span className="text-xs text-gray-400">
+                                            /
+                                        </span>
+                                        <Kbd>N</Kbd>
+                                    </div>
                                 </button>
                             </div>
                         </div>
@@ -306,18 +307,15 @@ export const QuizView: React.FC = () => {
                         <button
                             type="button"
                             onClick={goToNextQuestion}
-                            className="w-full flex flex-col items-center justify-center py-4 bg-gray-800 text-white rounded-2xl hover:bg-gray-900 transition-colors"
+                            className="w-full flex flex-col items-center justify-center py-4 bg-gray-800 text-white rounded-2xl hover:bg-gray-900 transition-colors gap-1 shadow-md"
                         >
-                            <div className="flex items-center font-bold mb-1">
+                            <div className="flex items-center font-bold">
                                 <span>次の問題へ</span>
                                 <ArrowRight className="w-5 h-5 ml-2" />
                             </div>
-                            <span className="text-xs font-normal opacity-70 flex items-center gap-1">
-                                キー:{" "}
-                                <Kbd className="bg-gray-700 text-gray-200 border-gray-600 shadow-[0_1.5px_0_0_rgba(0,0,0,0.4)]">
-                                    Enter
-                                </Kbd>
-                            </span>
+                            <Kbd className="bg-gray-700 text-gray-200 border-gray-600 shadow-none">
+                                Enter
+                            </Kbd>
                         </button>
                     )}
                 </div>
