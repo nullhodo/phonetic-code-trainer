@@ -28,15 +28,15 @@ export const PracticeView: React.FC = () => {
     const practiceInputRef = useRef<HTMLInputElement>(null);
 
     const selectNextPracticeWord = useCallback(() => {
-        let randomIndex = Math.floor(Math.random() * PRACTICE_WORDS.length);
-        while (
-            PRACTICE_WORDS[randomIndex] === currentWord &&
-            PRACTICE_WORDS.length > 1
-        ) {
-            randomIndex = Math.floor(Math.random() * PRACTICE_WORDS.length);
-        }
-        setCurrentWord(PRACTICE_WORDS[randomIndex] || "apple");
-    }, [currentWord]);
+        setCurrentWord((prevWord) => {
+            if (PRACTICE_WORDS.length <= 1) return PRACTICE_WORDS[0] || "apple";
+            let randomIndex = Math.floor(Math.random() * PRACTICE_WORDS.length);
+            while (PRACTICE_WORDS[randomIndex] === prevWord) {
+                randomIndex = Math.floor(Math.random() * PRACTICE_WORDS.length);
+            }
+            return PRACTICE_WORDS[randomIndex] || "apple";
+        });
+    }, []);
 
     const handlePracticeSubmit = () => {
         if (!practiceInputValue.trim()) return;
