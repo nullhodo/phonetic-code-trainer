@@ -12,6 +12,8 @@ import type { FeedbackType, PracticeResult, QuizStep } from "../types";
 import { normalizeString } from "../utils/levenshtein";
 import { calculatePracticeResults } from "../utils/practiceCalculator";
 
+import { Kbd } from "./Kbd";
+
 export const PracticeView: React.FC = () => {
     const updateStatsAndWeights = useSetAtom(updateMultipleStatsAndWeightsAtom);
     const [currentView] = useAtom(currentViewAtom);
@@ -166,17 +168,27 @@ export const PracticeView: React.FC = () => {
                         <button
                             type="button"
                             onClick={handlePracticeSkip}
-                            className="flex-1 py-4 text-gray-500 bg-gray-100 rounded-2xl font-bold hover:bg-gray-200 transition-colors"
+                            className="flex-1 py-4 text-gray-500 bg-gray-100 rounded-2xl font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-1.5"
                         >
-                            スキップ (Esc)
+                            <span>スキップ</span>
+                            <span className="text-xs font-normal opacity-75">
+                                (<Kbd>Esc</Kbd>)
+                            </span>
                         </button>
                         <button
                             type="button"
                             onClick={handlePracticeSubmit}
                             disabled={!practiceInputValue.trim()}
-                            className="flex-1 py-4 text-white bg-blue-600 rounded-2xl font-bold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className="flex-1 py-4 text-white bg-blue-600 rounded-2xl font-bold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-1.5"
                         >
-                            判定する (Enter)
+                            <span>判定する</span>
+                            <span className="text-xs font-normal opacity-90">
+                                (
+                                <Kbd className="bg-blue-700 text-white border-blue-500 shadow-[0_1.5px_0_0_rgba(0,0,0,0.3)]">
+                                    Enter
+                                </Kbd>
+                                )
+                            </span>
                         </button>
                     </div>
                 </div>
@@ -294,8 +306,11 @@ export const PracticeView: React.FC = () => {
                             <span>次の問題へ</span>
                             <ArrowRight className="w-5 h-5 ml-2" />
                         </div>
-                        <span className="text-xs font-normal opacity-70">
-                            キー: Enter
+                        <span className="text-xs font-normal opacity-70 flex items-center gap-1">
+                            キー:{" "}
+                            <Kbd className="bg-gray-700 text-gray-200 border-gray-600 shadow-[0_1.5px_0_0_rgba(0,0,0,0.4)]">
+                                Enter
+                            </Kbd>
                         </span>
                     </button>
                 </div>
