@@ -25,20 +25,24 @@ export const QuizView: React.FC = () => {
     const inputRef = useRef<HTMLInputElement>(null);
     const recentHistoryRef = useRef<string[]>([]);
 
+    const weightsRef = useRef(weights);
+    weightsRef.current = weights;
+
     const selectNextLetter = useCallback(() => {
         const prevHistory = recentHistoryRef.current;
-        const availableKeys = Object.keys(weights).filter(
+        const currentWeights = weightsRef.current;
+        const availableKeys = Object.keys(currentWeights).filter(
             (k) => !prevHistory.includes(k)
         );
         let totalWeight = 0;
         for (const k of availableKeys) {
-            totalWeight += weights[k] ?? 1;
+            totalWeight += currentWeights[k] ?? 1;
         }
         let random = Math.random() * totalWeight;
         let selectedLetter = availableKeys[0] || "A";
 
         for (let i = 0; i < availableKeys.length; i++) {
-            random -= weights[availableKeys[i]] ?? 1;
+            random -= currentWeights[availableKeys[i]] ?? 1;
             if (random <= 0) {
                 selectedLetter = availableKeys[i];
                 break;
@@ -50,7 +54,7 @@ export const QuizView: React.FC = () => {
             0,
             HISTORY_LENGTH
         );
-    }, [weights]);
+    }, []);
 
     const handleAnswerSubmit = () => {
         if (!inputValue.trim()) return;
