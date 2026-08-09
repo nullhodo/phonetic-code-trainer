@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from "framer-motion";
 import { useAtom, useSetAtom } from "jotai";
 import { AlertCircle, ArrowRight, Check, X } from "lucide-react";
 import type React from "react";
@@ -36,7 +35,7 @@ export const PracticeView: React.FC = () => {
         ) {
             randomIndex = Math.floor(Math.random() * PRACTICE_WORDS.length);
         }
-        setCurrentWord(PRACTICE_WORDS[randomIndex] || "code");
+        setCurrentWord(PRACTICE_WORDS[randomIndex] || "apple");
     }, [currentWord]);
 
     const handlePracticeSubmit = () => {
@@ -144,181 +143,163 @@ export const PracticeView: React.FC = () => {
     }, [currentView, practiceStep, goToNextPracticeWord]);
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="max-w-2xl mx-auto bg-white rounded-3xl shadow-lg p-6 md:p-8"
-        >
+        <div className="max-w-md mx-auto bg-white rounded-3xl shadow-lg p-8">
             <div className="text-center mb-8">
-                <span className="text-sm font-semibold text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
-                    単語実践練習
-                </span>
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={currentWord}
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.9, opacity: 0 }}
-                        className="text-5xl font-extrabold text-gray-800 my-6 tracking-widest uppercase"
-                    >
-                        {currentWord}
-                    </motion.div>
-                </AnimatePresence>
-                <p className="text-gray-500 text-sm">
-                    単語全体をフォネティックコードで連続入力してください (例:
-                    apple → alpha papa papa lima echo)
-                </p>
+                <div className="text-7xl font-bold text-gray-800 tracking-tighter uppercase">
+                    {currentWord}
+                </div>
             </div>
 
-            {practiceStep === "question" ? (
+            {practiceStep === "question" && (
                 <div className="space-y-4">
-                    <div className="relative">
-                        <input
-                            ref={practiceInputRef}
-                            type="text"
-                            value={practiceInputValue}
-                            onChange={(e) =>
-                                setPracticeInputValue(e.target.value)
-                            }
-                            onKeyDown={handleInputKeyDown}
-                            placeholder="alphapapapapalimaecho"
-                            className="w-full px-6 py-4 text-xl text-center border-2 border-gray-200 rounded-2xl focus:border-purple-500 focus:outline-none transition-colors"
-                            autoComplete="off"
-                            autoCapitalize="off"
-                            spellCheck="false"
-                        />
-                    </div>
-                    <div className="flex gap-3">
+                    <input
+                        ref={practiceInputRef}
+                        type="text"
+                        value={practiceInputValue}
+                        onChange={(e) => setPracticeInputValue(e.target.value)}
+                        onKeyDown={handleInputKeyDown}
+                        className="w-full text-center text-xl p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all"
+                        autoComplete="off"
+                        spellCheck="false"
+                    />
+                    <div className="flex gap-4">
                         <button
                             type="button"
                             onClick={handlePracticeSkip}
-                            className="w-1/3 py-4 bg-gray-100 text-gray-600 rounded-2xl font-bold hover:bg-gray-200 transition-colors flex flex-col items-center justify-center"
+                            className="flex-1 py-4 text-gray-500 bg-gray-100 rounded-2xl font-bold hover:bg-gray-200 transition-colors"
                         >
-                            <span>パス</span>
-                            <span className="text-xs font-normal opacity-60">
-                                Key: Esc
-                            </span>
+                            スキップ (Esc)
                         </button>
                         <button
                             type="button"
                             onClick={handlePracticeSubmit}
-                            className="w-2/3 py-4 bg-purple-600 text-white rounded-2xl font-bold hover:bg-purple-700 transition-colors flex flex-col items-center justify-center shadow-md"
+                            disabled={!practiceInputValue.trim()}
+                            className="flex-1 py-4 text-white bg-blue-600 rounded-2xl font-bold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            <span>判定する</span>
-                            <span className="text-xs font-normal opacity-80">
-                                Key: Enter
-                            </span>
+                            判定する (Enter)
                         </button>
                     </div>
                 </div>
-            ) : (
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="space-y-6"
-                >
-                    {practiceFeedbackType === "correct" && (
-                        <div className="p-4 bg-green-50 border border-green-200 rounded-2xl text-center">
-                            <div className="inline-flex p-2 bg-green-100 text-green-600 rounded-full mb-2">
-                                <Check className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-xl font-bold text-green-800">
-                                完全正解！
-                            </h3>
-                        </div>
-                    )}
+            )}
 
-                    {practiceFeedbackType === "typo_correct" && (
-                        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-center">
-                            <div className="inline-flex p-2 bg-amber-100 text-amber-600 rounded-full mb-2">
-                                <AlertCircle className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-xl font-bold text-amber-800">
-                                一部タイポあり（合格判定）
-                            </h3>
-                        </div>
-                    )}
+            {practiceStep === "feedback" && (
+                <div className="space-y-6 animate-in fade-in zoom-in duration-200">
+                    <div
+                        className={`p-4 rounded-2xl flex flex-col items-center justify-center ${
+                            practiceFeedbackType === "correct"
+                                ? "bg-green-100 text-green-700"
+                                : practiceFeedbackType === "typo_correct"
+                                  ? "bg-yellow-100 text-yellow-700"
+                                  : practiceFeedbackType === "wrong"
+                                    ? "bg-red-100 text-red-700"
+                                    : "bg-blue-50 text-blue-700"
+                        }`}
+                    >
+                        {practiceFeedbackType === "correct" && (
+                            <>
+                                <Check className="w-12 h-12 mb-2" />
+                                <span className="text-2xl font-bold">
+                                    正解！
+                                </span>
+                            </>
+                        )}
+                        {practiceFeedbackType === "typo_correct" && (
+                            <>
+                                <AlertCircle className="w-12 h-12 mb-2" />
+                                <span className="text-2xl font-bold">
+                                    正解（タイポ許容）
+                                </span>
+                            </>
+                        )}
+                        {practiceFeedbackType === "wrong" && (
+                            <>
+                                <X className="w-12 h-12 mb-2" />
+                                <span className="text-2xl font-bold">
+                                    不正解
+                                </span>
+                            </>
+                        )}
+                        {practiceFeedbackType === "skipped" && (
+                            <span className="text-2xl font-bold py-2">
+                                全文字不正解扱い
+                            </span>
+                        )}
+                    </div>
 
-                    {(practiceFeedbackType === "wrong" ||
-                        practiceFeedbackType === "skipped") && (
-                        <div className="p-4 bg-red-50 border border-red-200 rounded-2xl text-center">
-                            <div className="inline-flex p-2 bg-red-100 text-red-600 rounded-full mb-2">
-                                <X className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-xl font-bold text-red-800">
-                                {practiceFeedbackType === "skipped"
-                                    ? "スキップしました"
-                                    : "不正解の文字があります"}
-                            </h3>
-                        </div>
-                    )}
-
-                    {/* 各文字ごとの判定内訳表示 */}
-                    <div className="grid grid-cols-1 gap-3">
-                        {practiceResults.map((res, idx) => {
-                            let bgClass = "bg-gray-50 border-gray-200";
-                            let badgeClass = "bg-gray-200 text-gray-700";
-                            let statusText = "パス";
-
-                            if (res.status === "correct") {
-                                bgClass = "bg-green-50 border-green-200";
-                                badgeClass = "bg-green-100 text-green-700";
-                                statusText = "正解";
-                            } else if (res.status === "typo_correct") {
-                                bgClass = "bg-amber-50 border-amber-200";
-                                badgeClass = "bg-amber-100 text-amber-700";
-                                statusText = "タイポ合格";
-                            } else if (res.status === "wrong") {
-                                bgClass = "bg-red-50 border-red-200";
-                                badgeClass = "bg-red-100 text-red-700";
-                                statusText = "不正解";
-                            }
-
-                            return (
-                                <div
-                                    key={`${res.letter}-${idx}`}
-                                    className={`p-3 border rounded-xl flex items-center justify-between ${bgClass}`}
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <span className="w-9 h-9 flex items-center justify-center bg-white rounded-lg font-extrabold text-gray-800 text-lg shadow-sm border border-gray-100">
-                                            {res.letter}
-                                        </span>
-                                        <div>
-                                            <p className="font-bold text-gray-800">
-                                                {
-                                                    NATO_ALPHABET[res.letter]
-                                                        ?.display
-                                                }
-                                            </p>
-                                            <p className="text-xs text-gray-500">
-                                                入力:{" "}
-                                                <span className="font-mono text-gray-700">
-                                                    {res.input || "(なし)"}
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <span
-                                        className={`text-xs px-2.5 py-1 rounded-full font-bold ${badgeClass}`}
-                                    >
-                                        {statusText}
+                    {/* 文字ごとの判定結果をリスト表示 */}
+                    <div className="flex flex-col items-stretch space-y-2 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                        {practiceResults.map((result, index) => (
+                            <div
+                                key={`${result.letter}-${index}`}
+                                className="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-xl bg-white border border-gray-100 shadow-sm"
+                            >
+                                <div className="flex items-center text-xl mb-1 sm:mb-0">
+                                    <span className="font-bold text-blue-600 w-8 text-center">
+                                        {result.letter}
+                                    </span>
+                                    <span className="text-gray-400 mx-2">
+                                        -
+                                    </span>
+                                    <span className="font-bold text-gray-800 tracking-wider">
+                                        {NATO_ALPHABET[result.letter]?.display}
                                     </span>
                                 </div>
-                            );
-                        })}
+
+                                <div
+                                    className={`flex items-center text-sm font-medium px-3 py-1 rounded-full ${
+                                        result.status === "correct"
+                                            ? "bg-green-100 text-green-700"
+                                            : result.status === "typo_correct"
+                                              ? "bg-yellow-100 text-yellow-700"
+                                              : result.status === "wrong"
+                                                ? "bg-red-100 text-red-700"
+                                                : "bg-gray-100 text-gray-600"
+                                    }`}
+                                >
+                                    {result.status === "correct" && (
+                                        <Check className="w-4 h-4 mr-1" />
+                                    )}
+                                    {result.status === "typo_correct" && (
+                                        <AlertCircle className="w-4 h-4 mr-1" />
+                                    )}
+                                    {(result.status === "wrong" ||
+                                        result.status === "skipped") && (
+                                        <X className="w-4 h-4 mr-1" />
+                                    )}
+
+                                    {result.status === "skipped" ? (
+                                        <span className="ml-1 tracking-wider">
+                                            スキップ
+                                        </span>
+                                    ) : result.input ? (
+                                        <span className="ml-1 tracking-wider">
+                                            {result.input}
+                                        </span>
+                                    ) : (
+                                        <span className="ml-1 italic opacity-70">
+                                            入力なし
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
                     </div>
 
                     <button
                         type="button"
                         onClick={goToNextPracticeWord}
-                        className="w-full py-4 bg-purple-600 text-white rounded-2xl font-bold hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 shadow-md"
+                        className="w-full flex flex-col items-center justify-center py-4 bg-gray-800 text-white rounded-2xl hover:bg-gray-900 transition-colors"
                     >
-                        <span>次の単語へ</span>
-                        <ArrowRight className="w-5 h-5" />
+                        <div className="flex items-center font-bold mb-1">
+                            <span>次の問題へ</span>
+                            <ArrowRight className="w-5 h-5 ml-2" />
+                        </div>
+                        <span className="text-xs font-normal opacity-70">
+                            キー: Enter
+                        </span>
                     </button>
-                </motion.div>
+                </div>
             )}
-        </motion.div>
+        </div>
     );
 };

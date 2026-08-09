@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from "framer-motion";
 import { useAtom, useSetAtom } from "jotai";
 import { AlertCircle, ArrowRight, Check, X } from "lucide-react";
 import type React from "react";
@@ -164,166 +163,146 @@ export const QuizView: React.FC = () => {
     const currentData = NATO_ALPHABET[currentLetter];
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="max-w-xl mx-auto bg-white rounded-3xl shadow-lg p-6 md:p-8"
-        >
+        <div className="max-w-md mx-auto bg-white rounded-3xl shadow-lg p-8">
             <div className="text-center mb-8">
-                <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
-                    単文字クイズ
-                </span>
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={currentLetter}
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.8, opacity: 0 }}
-                        className="text-8xl font-extrabold text-gray-800 my-6 tracking-wider"
-                    >
-                        {currentLetter}
-                    </motion.div>
-                </AnimatePresence>
-                <p className="text-gray-500 text-sm">
-                    このアルファベットのフォネティックコードを入力してください
-                </p>
+                <div className="text-9xl font-bold text-gray-800 tracking-tighter">
+                    {currentLetter}
+                </div>
             </div>
 
-            {quizStep === "question" ? (
+            {quizStep === "question" && (
                 <div className="space-y-4">
-                    <div className="relative">
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            onKeyDown={handleInputKeyDown}
-                            placeholder="例: Alpha"
-                            className="w-full px-6 py-4 text-xl text-center border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:outline-none transition-colors"
-                            autoComplete="off"
-                            autoCapitalize="off"
-                            spellCheck="false"
-                        />
-                    </div>
-                    <div className="flex gap-3">
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyDown={handleInputKeyDown}
+                        className="w-full text-center text-2xl p-4 border-2 border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all"
+                        autoComplete="off"
+                        spellCheck="false"
+                    />
+                    <div className="flex gap-4">
                         <button
                             type="button"
                             onClick={handleSkip}
-                            className="w-1/3 py-4 bg-gray-100 text-gray-600 rounded-2xl font-bold hover:bg-gray-200 transition-colors flex flex-col items-center justify-center"
+                            className="flex-1 py-4 text-gray-500 bg-gray-100 rounded-2xl font-bold hover:bg-gray-200 transition-colors"
                         >
-                            <span>パス</span>
-                            <span className="text-xs font-normal opacity-60">
-                                Key: Space
-                            </span>
+                            スキップ (Space)
                         </button>
                         <button
                             type="button"
                             onClick={handleAnswerSubmit}
-                            className="w-2/3 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-colors flex flex-col items-center justify-center shadow-md"
+                            disabled={!inputValue.trim()}
+                            className="flex-1 py-4 text-white bg-blue-600 rounded-2xl font-bold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            <span>回答する</span>
-                            <span className="text-xs font-normal opacity-80">
-                                Key: Enter
-                            </span>
+                            判定する (Enter)
                         </button>
                     </div>
                 </div>
-            ) : (
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="space-y-6"
-                >
-                    {feedbackType === "correct" && (
-                        <div className="p-4 bg-green-50 border border-green-200 rounded-2xl text-center">
-                            <div className="inline-flex p-2 bg-green-100 text-green-600 rounded-full mb-2">
-                                <Check className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-xl font-bold text-green-800">
-                                正解！
-                            </h3>
-                            <p className="text-green-700 text-lg mt-1 font-semibold">
-                                {currentData?.display}
-                            </p>
-                        </div>
-                    )}
+            )}
 
-                    {feedbackType === "typo_correct" && (
-                        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-center">
-                            <div className="inline-flex p-2 bg-amber-100 text-amber-600 rounded-full mb-2">
-                                <AlertCircle className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-xl font-bold text-amber-800">
-                                惜しい！(タイポ検出)
-                            </h3>
-                            <p className="text-amber-700 text-lg mt-1 font-semibold">
-                                正しいコード: {currentData?.display}
-                            </p>
-                            <p className="text-amber-600 text-sm mt-1">
-                                あなたの入力: {inputValue}
-                            </p>
-                        </div>
-                    )}
+            {quizStep === "feedback" && (
+                <div className="space-y-6 animate-in fade-in zoom-in duration-200">
+                    <div
+                        className={`p-4 rounded-2xl flex flex-col items-center justify-center ${
+                            feedbackType === "correct"
+                                ? "bg-green-100 text-green-700"
+                                : feedbackType === "typo_correct"
+                                  ? "bg-yellow-100 text-yellow-700"
+                                  : feedbackType === "wrong"
+                                    ? "bg-red-100 text-red-700"
+                                    : "bg-blue-50 text-blue-700"
+                        }`}
+                    >
+                        {feedbackType === "correct" && (
+                            <>
+                                <Check className="w-12 h-12 mb-2" />
+                                <span className="text-2xl font-bold">
+                                    正解！
+                                </span>
+                            </>
+                        )}
+                        {feedbackType === "typo_correct" && (
+                            <>
+                                <AlertCircle className="w-12 h-12 mb-2" />
+                                <span className="text-2xl font-bold">
+                                    正解（タイポ許容）
+                                </span>
+                            </>
+                        )}
+                        {feedbackType === "wrong" && (
+                            <>
+                                <X className="w-12 h-12 mb-2" />
+                                <span className="text-2xl font-bold">
+                                    不正解
+                                </span>
+                            </>
+                        )}
+                        {feedbackType === "skipped" && (
+                            <span className="text-2xl font-bold py-2">
+                                答え
+                            </span>
+                        )}
+                    </div>
 
-                    {feedbackType === "wrong" && (
-                        <div className="p-4 bg-red-50 border border-red-200 rounded-2xl text-center">
-                            <div className="inline-flex p-2 bg-red-100 text-red-600 rounded-full mb-2">
-                                <X className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-xl font-bold text-red-800">
-                                不正解
-                            </h3>
-                            <p className="text-red-700 text-lg mt-1 font-semibold">
-                                正しいコード: {currentData?.display}
-                            </p>
-                            <p className="text-red-600 text-sm mt-1">
-                                あなたの入力: {inputValue}
-                            </p>
+                    <div className="text-center">
+                        <div className="text-4xl font-bold text-gray-800 mb-1 tracking-wider">
+                            {currentData?.display}
                         </div>
-                    )}
+                    </div>
 
-                    {feedbackType === "skipped" && (
-                        <div className="p-4 bg-gray-50 border border-gray-200 rounded-2xl text-center">
-                            <h3 className="text-xl font-bold text-gray-800">
-                                正解: {currentData?.display}
-                            </h3>
-                            <p className="text-gray-600 text-sm mt-2 mb-4">
-                                正解を自覚できていましたか？
+                    {feedbackType === "skipped" ? (
+                        <div className="space-y-3">
+                            <p className="text-center text-gray-500 font-medium">
+                                答えを知っていましたか？
                             </p>
-                            <div className="flex justify-center gap-4">
+                            <div className="flex gap-4">
                                 <button
                                     type="button"
                                     onClick={() => handleSelfAssessment(false)}
-                                    className="px-5 py-3 bg-red-100 text-red-700 rounded-xl font-bold hover:bg-red-200 transition-colors flex items-center gap-1"
+                                    className="flex-1 flex flex-col items-center justify-center py-4 bg-red-50 text-red-600 rounded-2xl border-2 border-red-200 hover:bg-red-100 transition-colors"
                                 >
-                                    <X className="w-4 h-4" /> いいえ (Key: X /
-                                    N)
+                                    <X className="w-8 h-8 mb-1" />
+                                    <span className="font-bold mb-1">
+                                        わからなかった
+                                    </span>
+                                    <span className="text-xs font-normal opacity-70">
+                                        キー: X / N
+                                    </span>
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => handleSelfAssessment(true)}
-                                    className="px-5 py-3 bg-green-100 text-green-700 rounded-xl font-bold hover:bg-green-200 transition-colors flex items-center gap-1"
+                                    className="flex-1 flex flex-col items-center justify-center py-4 bg-green-50 text-green-600 rounded-2xl border-2 border-green-200 hover:bg-green-100 transition-colors"
                                 >
-                                    <Check className="w-4 h-4" /> はい (Key: O /
-                                    Y)
+                                    <Check className="w-8 h-8 mb-1" />
+                                    <span className="font-bold mb-1">
+                                        わかっていた
+                                    </span>
+                                    <span className="text-xs font-normal opacity-70">
+                                        キー: O / Y
+                                    </span>
                                 </button>
                             </div>
                         </div>
-                    )}
-
-                    {feedbackType !== "skipped" && (
+                    ) : (
                         <button
                             type="button"
                             onClick={goToNextQuestion}
-                            className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-md"
+                            className="w-full flex flex-col items-center justify-center py-4 bg-gray-800 text-white rounded-2xl hover:bg-gray-900 transition-colors"
                         >
-                            <span>次の問題へ</span>
-                            <ArrowRight className="w-5 h-5" />
+                            <div className="flex items-center font-bold mb-1">
+                                <span>次の問題へ</span>
+                                <ArrowRight className="w-5 h-5 ml-2" />
+                            </div>
+                            <span className="text-xs font-normal opacity-70">
+                                キー: Enter
+                            </span>
                         </button>
                     )}
-                </motion.div>
+                </div>
             )}
-        </motion.div>
+        </div>
     );
 };

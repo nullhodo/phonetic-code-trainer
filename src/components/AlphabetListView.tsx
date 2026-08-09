@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import type React from "react";
 import { NATO_ALPHABET } from "../constants/natoAlphabet";
@@ -8,16 +7,12 @@ export const AlphabetListView: React.FC = () => {
     const [stats] = useAtom(statsAtom);
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="max-w-2xl mx-auto bg-white rounded-3xl shadow-lg p-6 md:p-8"
-        >
+        <div className="max-w-2xl mx-auto bg-white rounded-3xl shadow-lg p-6 md:p-8">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-gray-800">
                     フォネティックコード一覧
                 </h2>
+                <div className="text-sm text-gray-500 flex items-center gap-4" />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -61,6 +56,6 @@ export const AlphabetListView: React.FC = () => {
                     );
                 })}
             </div>
-        </motion.div>
+        </div>
     );
 };
