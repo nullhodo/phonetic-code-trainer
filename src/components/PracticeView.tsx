@@ -179,9 +179,7 @@ export const PracticeView: React.FC = () => {
                             className="flex-1 py-4 text-white bg-blue-600 rounded-2xl font-bold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 shadow-md"
                         >
                             <span>判定する</span>
-                            <Kbd className="bg-blue-500/80 text-white border-blue-400/50 shadow-none">
-                                Enter
-                            </Kbd>
+                            <Kbd>Enter</Kbd>
                         </button>
                     </div>
                 </div>
@@ -299,9 +297,7 @@ export const PracticeView: React.FC = () => {
                             <span>次の問題へ</span>
                             <ArrowRight className="w-5 h-5 ml-2" />
                         </div>
-                        <Kbd className="bg-gray-700 text-gray-200 border-gray-600 shadow-none">
-                            Enter
-                        </Kbd>
+                        <Kbd>Enter</Kbd>
                     </button>
                 </div>
             )}
