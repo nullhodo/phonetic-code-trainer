@@ -1,5 +1,4 @@
 import { useAtom } from "jotai";
-import { BookOpen, Gamepad2, Keyboard } from "lucide-react";
 import type React from "react";
 import { currentViewAtom } from "../store/atoms";
 
@@ -17,8 +16,7 @@ export const Navbar: React.FC = () => {
                         : "bg-white text-gray-600 hover:bg-gray-100 shadow-sm"
                 }`}
             >
-                <Gamepad2 className="w-5 h-5 mr-2" />
-                <span className="font-bold">単文字クイズ</span>
+                <span className="font-bold">1文字クイズ</span>
             </button>
             <button
                 type="button"
@@ -29,8 +27,7 @@ export const Navbar: React.FC = () => {
                         : "bg-white text-gray-600 hover:bg-gray-100 shadow-sm"
                 }`}
             >
-                <Keyboard className="w-5 h-5 mr-2" />
-                <span className="font-bold">実践</span>
+                <span className="font-bold">実践クイズ</span>
             </button>
             <button
                 type="button"
@@ -41,8 +38,7 @@ export const Navbar: React.FC = () => {
                         : "bg-white text-gray-600 hover:bg-gray-100 shadow-sm"
                 }`}
             >
-                <BookOpen className="w-5 h-5 mr-2" />
-                <span className="font-bold">一覧表</span>
+                <span className="font-bold">コード一覧</span>
             </button>
         </div>
     );

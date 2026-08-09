@@ -264,19 +264,6 @@ export const QuizView: React.FC = () => {
                             <div className="flex gap-4">
                                 <button
                                     type="button"
-                                    onClick={() => handleSelfAssessment(false)}
-                                    className="flex-1 flex flex-col items-center justify-center py-4 bg-red-50 text-red-600 rounded-2xl border-2 border-red-200 hover:bg-red-100 transition-colors"
-                                >
-                                    <X className="w-8 h-8 mb-1" />
-                                    <span className="font-bold mb-1">
-                                        わからなかった
-                                    </span>
-                                    <span className="text-xs font-normal opacity-70">
-                                        キー: X / N
-                                    </span>
-                                </button>
-                                <button
-                                    type="button"
                                     onClick={() => handleSelfAssessment(true)}
                                     className="flex-1 flex flex-col items-center justify-center py-4 bg-green-50 text-green-600 rounded-2xl border-2 border-green-200 hover:bg-green-100 transition-colors"
                                 >
@@ -286,6 +273,19 @@ export const QuizView: React.FC = () => {
                                     </span>
                                     <span className="text-xs font-normal opacity-70">
                                         キー: O / Y
+                                    </span>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleSelfAssessment(false)}
+                                    className="flex-1 flex flex-col items-center justify-center py-4 bg-red-50 text-red-600 rounded-2xl border-2 border-red-200 hover:bg-red-100 transition-colors"
+                                >
+                                    <X className="w-8 h-8 mb-1" />
+                                    <span className="font-bold mb-1">
+                                        わからなかった
+                                    </span>
+                                    <span className="text-xs font-normal opacity-70">
+                                        キー: X / N
                                     </span>
                                 </button>
                             </div>
