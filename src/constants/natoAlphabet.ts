@@ -1,0 +1,30 @@
+import type { NatoAlphabet } from "../types";
+
+export const NATO_ALPHABET: NatoAlphabet = {
+    A: { code: "Alpha", display: "Álpha" },
+    B: { code: "Bravo", display: "Brávo" },
+    C: { code: "Charlie", display: "Chárlie" },
+    D: { code: "Delta", display: "Délta" },
+    E: { code: "Echo", display: "Écho" },
+    F: { code: "Foxtrot", display: "Fóxtrot" },
+    G: { code: "Golf", display: "Gólf" },
+    H: { code: "Hotel", display: "Hotél" },
+    I: { code: "India", display: "Índia" },
+    J: { code: "Juliett", display: "Júliett" },
+    K: { code: "Kilo", display: "Kílo" },
+    L: { code: "Lima", display: "Líma" },
+    M: { code: "Mike", display: "Míke" },
+    N: { code: "November", display: "Novémber" },
+    O: { code: "Oscar", display: "Óscar" },
+    P: { code: "Papa", display: "Papá" },
+    Q: { code: "Quebec", display: "Quebéc" },
+    R: { code: "Romeo", display: "Rómeo" },
+    S: { code: "Sierra", display: "Siérra" },
+    T: { code: "Tango", display: "Tángo" },
+    U: { code: "Uniform", display: "Úniform" },
+    V: { code: "Victor", display: "Víctor" },
+    W: { code: "Whiskey", display: "Whískey" },
+    X: { code: "X-ray", display: "X\u0301-ray" },
+    Y: { code: "Yankee", display: "Yánkee" },
+    Z: { code: "Zulu", display: "Zúlu" }
+};
