@@ -1,10 +1,12 @@
 # phonetic-code-trainer
 
-NATOフォネティックコード（アルファベット通信用コード）の暗記およびタイピングトレーニングをWebブラウザ上で行えるインタラクティブアプリケーション。
+NATOフォネティックコードの暗記およびタイピングトレーニングをWebブラウザ上で行えるインタラクティブアプリケーション。
+Webサイト: https://nullhodo.github.io/phonetic-code-trainer/
 
 ## 概要
 
-アルファベット単体および英単語の連続フォネティックコードを効率的に学習するためのトレーナー。レーベンシュタイン距離を用いたタイポ許容アルゴリズムおよび適応型出題重み調整システムを備えています。
+アルファベット単体および英単語の連続フォネティックコードを効率的に学習するためのトレーナー。
+レーベンシュタイン距離を用いたタイポ許容アルゴリズムおよび適応型出題重み調整システムを備えています。
 
 ## 機能
 
@@ -29,7 +31,7 @@ NATOフォネティックコード（アルファベット通信用コード）�
 
 ```text
 phonetic-code-trainer
-├── index.html                  - WebアプリのエントリHTML (タイトル: phonetic-code-trainer)
+├── index.html
 ├── package.json
 ├── tsconfig.json
 ├── vite.config.ts
@@ -37,11 +39,11 @@ phonetic-code-trainer
 ├── knip.json                   - デッドコード・未利用依存関係検出の設定
 ├── .gitignore
 ├── readme.md
-├── .storybook/                 - Storybookの設定
+├── .storybook/
 └── src/
-    ├── main.tsx                - Reactアプリケーションエントリポイント
+    ├── main.tsx
     ├── App.tsx                 - ルートコンポーネントおよび画面遷移管理
-    ├── index.css               - Zen Maru Gothicフォント読み込みおよびTailwind CSS設定
+    ├── index.css
     ├── types/
     │   └── index.ts            - データ構造・判定ステータス等のTypeScript型定義
     ├── constants/
@@ -49,7 +51,7 @@ phonetic-code-trainer
     │   └── practiceWords.ts    - 実践練習用英単語リストおよび出題アルゴリズム用パラメータ
     ├── utils/
     │   ├── levenshtein.ts      - 文字列正規化およびレーベンシュタイン距離（編集距離）計算関数
-    │   └── practiceCalculator.ts - 単語入力の動的計画法（DP）による最適分割および各文字判定関数
+    │   └── practiceCalculator.ts - 単語入力の動的計画法による最適分割および各文字判定関数
     ├── store/
     │   └── atoms.ts            - Jotaiを用いた出題重み・正誤統計・表示モードの状態管理
     ├── components/
