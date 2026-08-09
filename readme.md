@@ -39,7 +39,6 @@ Webサイト: https://nullhodo.github.io/phonetic-code-trainer/
 - ビルドツール: Vite
 - パッケージマネージャー: pnpm
 - コード品質管理: Biome / Knip / Storybook
-- フォント: Zen Maru Gothic
 
 ### 構造
 
@@ -49,11 +48,13 @@ phonetic-code-trainer
 ├── package.json
 ├── tsconfig.json
 ├── vite.config.ts
-├── biome.json                  - LinterおよびFormatterの設定
-├── knip.json                   - デッドコード・未利用依存関係検出の設定
+├── biome.json
+├── knip.json
 ├── .gitignore
 ├── readme.md
 ├── .storybook/
+├── scripts/
+│   └── analyzePracticeWords.ts - 実践練習用単語リストのアルファベット統計解析スクリプト
 └── src/
     ├── main.tsx
     ├── App.tsx                 - ルートコンポーネントおよび画面遷移管理
@@ -64,7 +65,7 @@ phonetic-code-trainer
     │   ├── natoAlphabet.ts     - NATOフォネティックコード対応表データ
     │   └── practiceWords.ts    - 実践練習用英単語リストおよび出題アルゴリズム用パラメータ
     ├── utils/
-    │   ├── levenshtein.ts      - 文字列正規化およびレーベンシュタイン距離（編集距離）計算関数
+    │   ├── levenshtein.ts      - 文字列正規化およびレーベンシュタイン距離計算関数
     │   └── practiceCalculator.ts - 単語入力の動的計画法による最適分割および各文字判定関数
     ├── store/
     │   └── atoms.ts            - Jotaiを用いた出題重み・正誤統計・表示モードの状態管理
@@ -78,13 +79,14 @@ phonetic-code-trainer
 
 ## 実行方法
 
-| コマンド         | 実行内容                                |
-| ---------------- | --------------------------------------- |
-| `pnpm install`   | パッケージのインストール                |
-| `pnpm dev`       | 開発サーバーの起動                      |
-| `pnpm build`     | プロジェクトのビルド                    |
-| `pnpm preview`   | ビルド成果物のプレビュー表示            |
-| `pnpm check`     | Biomeによるリント・フォーマットチェック |
-| `pnpm format`    | Biomeによるコード自動フォーマット       |
-| `pnpm knip`      | 未使用ファイルおよびデッドコードの検出  |
-| `pnpm storybook` | Storybook開発サーバーの起動             |
+| コマンド         | 実行内容                                     |
+| ---------------- | -------------------------------------------- |
+| `pnpm install`   | パッケージのインストール                     |
+| `pnpm dev`       | 開発サーバーの起動                           |
+| `pnpm build`     | プロジェクトのビルド                         |
+| `pnpm preview`   | ビルド成果物のプレビュー表示                 |
+| `pnpm check`     | Biomeによるリント・フォーマットチェック      |
+| `pnpm format`    | Biomeによるコード自動フォーマット            |
+| `pnpm knip`      | 未使用ファイルおよびデッドコードの検出       |
+| `pnpm stats`     | 実践単語リストのアルファベット出現統計を出力 |
+| `pnpm storybook` | Storybook開発サーバーの起動                  |
