@@ -4,7 +4,6 @@
     "project": ["src/**/*.{ts,tsx}"],
     "ignoreDependencies": [
         "@storybook/blocks",
-        "tailwindcss",
-        "framer-motion"
+        "tailwindcss"
     ]
 }
